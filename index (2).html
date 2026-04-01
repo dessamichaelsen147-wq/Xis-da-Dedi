@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cardápio online do Xis da Dedi — Imbé, RS. Xis, Hot Dog e mais!">
+<title>Xis da Dedi — Imbé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --yellow:#FFD000;--yellow-d:#E6BB00;--yellow-l:#FFF8CC;
+  --red:#E8211A;--red-d:#C01A14;
+  --dark:#1A0A00;--dark2:#2E1200;
+  --text:#1A0A00;--muted:#7A5A40;
+  --bg:#FFFDF5;--card:#FFFFFF;
+  --border:rgba(255,208,0,0.18);
+  --wa:#25D366;--wa-d:#1da851;
+  --radius:18px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+
+/* HEADER */
+.hdr{background:linear-gradient(150deg,var(--red) 0%,#A81410 100%);padding:28px 20px 56px;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-70px;right:-70px;width:240px;height:240px;background:rgba(255,208,0,.10);border-radius:50%;pointer-events:none}
+.hdr::after{content:'';position:absolute;bottom:-90px;left:-50px;width:200px;height:200px;background:rgba(255,208,0,.07);border-radius:50%;pointer-events:none}
+.logo{width:84px;height:84px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.6rem;margin:0 auto 12px;box-shadow:0 6px 24px rgba(0,0,0,.25);border:3px solid rgba(255,255,255,.25);position:relative;z-index:1}
+.hdr h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--yellow);position:relative;z-index:1;letter-spacing:-.5px;text-shadow:0 2px 10px rgba(0,0,0,.2)}
+.hdr-sub{color:rgba(255,255,255,.78);font-size:.85rem;margin-top:4px;position:relative;z-index:1}
+.hdr-badges{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap;position:relative;z-index:1}
+.hdr-badge{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px}
+
+/* WAVE */
+.wave{background:var(--red);margin-top:-1px;line-height:0}
+.wave svg{display:block;width:100%}
+
+/* PROMO */
+.promo{margin:-28px 16px 0;background:var(--yellow);border-radius:16px;padding:13px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 6px 24px rgba(255,208,0,.32);position:relative;z-index:5}
+.promo-icon{font-size:1.7rem;flex-shrink:0}
+.promo-title{font-weight:900;font-size:.86rem;color:var(--dark)}
+.promo-desc{font-size:.72rem;color:rgba(26,10,0,.6);margin-top:2px}
+
+/* CATEGORIES */
+.cats-wrap{padding:22px 0 6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.cats-wrap::-webkit-scrollbar{display:none}
+.cats{display:flex;gap:10px;padding:0 16px;width:max-content}
+.cat{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:2px solid transparent;border-radius:14px;padding:11px 14px;cursor:pointer;transition:all .2s;min-width:68px;box-shadow:0 2px 10px rgba(0,0,0,.06);font-family:'Nunito',sans-serif}
+.cat.on{background:var(--red);border-color:var(--red);box-shadow:0 4px 16px rgba(232,33,26,.28)}
+.cat:not(.on):hover{border-color:var(--yellow)}
+.cat-em{font-size:1.45rem}
+.cat-lb{font-size:.68rem;font-weight:800;color:var(--text)}
+.cat.on .cat-lb{color:#fff}
+
+/* SECTIONS */
+.sec{padding:4px 16px}
+.sec.hide{display:none}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin:22px 0 14px}
+.sec-line{flex:1;height:2px;background:linear-gradient(to right,var(--yellow),transparent);border-radius:2px}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:var(--dark);display:flex;align-items:center;gap:7px}
+
+/* GRID & CARDS */
+.grid{display:flex;flex-direction:column;gap:11px}
+.card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.07);display:flex;align-items:stretch;border:1.5px solid var(--border);transition:transform .18s}
+.card:active{transform:scale(.985)}
+.card.star{border-color:var(--yellow);box-shadow:0 4px 18px rgba(255,208,0,.18)}
+.card-body{flex:1;padding:15px;display:flex;flex-direction:column;justify-content:space-between}
+.card-tags{display:flex;gap:6px;margin-bottom:7px;flex-wrap:wrap}
+.tag{font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.4px}
+.tag-hot{background:var(--red);color:#fff}
+.tag-star{background:var(--yellow);color:var(--dark)}
+.card-name{font-weight:900;font-size:.97rem;color:var(--dark);line-height:1.2}
+.card-desc{font-size:.78rem;color:var(--muted);margin-top:4px;line-height:1.5}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:13px}
+.card-price{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--red)}
+.card-price sup{font-size:.65em;vertical-align:super;font-weight:700}
+.btn-add{background:var(--red);color:#fff;border:none;padding:9px 15px;border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.78rem;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;box-shadow:0 3px 10px rgba(232,33,26,.28);white-space:nowrap}
+.btn-add:hover{background:var(--red-d);transform:scale(1.04)}
+.card.star .btn-add{background:var(--yellow);color:var(--dark);box-shadow:0 3px 10px rgba(255,208,0,.35)}
+.card.star .btn-add:hover{background:var(--yellow-d)}
+.card-img{width:96px;background:linear-gradient(135deg,#FFF8E0,#FFF0CC);display:flex;align-items:center;justify-content:center;font-size:2.8rem;flex-shrink:0}
+.card.star .card-img{background:linear-gradient(135deg,#FFF3A0,#FFE060)}
+
+/* CART BUTTON */
+.cart-btn{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:90;background:var(--dark);color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:.92rem;padding:15px 28px;border-radius:100px;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 8px 32px rgba(0,0,0,.28);transition:opacity .2s,transform .2s;border:none;white-space:nowrap;opacity:0;pointer-events:none}
+.cart-btn.show{opacity:1;pointer-events:all;animation:cartPop .3s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes cartPop{from{transform:translateX(-50%) scale(.8)}to{transform:translateX(-50%) scale(1)}}
+.cart-btn:hover{background:var(--dark2)}
+.cart-badge{background:var(--yellow);color:var(--dark);font-size:.78rem;font-weight:900;padding:3px 9px;border-radius:100px;margin-left:2px}
+.cart-total-pill{background:rgba(255,255,255,.12);padding:4px 10px;border-radius:100px;font-size:.82rem}
+
+/* OVERLAY & DRAWER */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.overlay.on{opacity:1;pointer-events:all}
+.drawer{position:fixed;bottom:0;left:0;right:0;z-index:201;background:#fff;border-radius:28px 28px 0 0;max-height:90vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .38s cubic-bezier(.34,1.1,.64,1)}
+.overlay.on .drawer{transform:translateY(0)}
+.drawer-handle{width:40px;height:4px;background:#e0e0e0;border-radius:2px;margin:14px auto 0;flex-shrink:0}
+.drawer-hdr{padding:16px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0;flex-shrink:0}
+.drawer-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--dark)}
+.drawer-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);padding:4px;line-height:1}
+.drawer-body{overflow-y:auto;flex:1;padding:16px 20px}
+.drawer-empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.drawer-empty-icon{font-size:3rem;margin-bottom:10px}
+.drawer-empty p{font-size:.9rem}
+
+/* CART ITEMS */
+.ci{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f5f5f5}
+.ci-em{font-size:1.8rem;flex-shrink:0;width:44px;text-align:center}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-weight:800;font-size:.9rem;color:var(--dark)}
+.ci-price{font-size:.82rem;color:var(--red);font-weight:700;margin-top:2px}
+.ci-qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:none;cursor:pointer;font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.qty-minus{background:#f5f0eb;color:var(--dark)}
+.qty-minus:hover{background:#e8e0d8}
+.qty-plus{background:var(--red);color:#fff}
+.qty-plus:hover{background:var(--red-d)}
+.qty-num{font-weight:900;font-size:.9rem;min-width:18px;text-align:center}
+.ci-del{background:none;border:none;color:#ccc;font-size:1rem;cursor:pointer;padding:4px;transition:color .15s}
+.ci-del:hover{color:var(--red)}
+
+/* DRAWER FOOTER */
+.drawer-foot{padding:16px 20px 28px;border-top:1px solid #f0f0f0;flex-shrink:0}
+.cart-summary{background:#FFFDF5;border-radius:14px;padding:14px 16px;margin-bottom:16px}
+.summary-row{display:flex;justify-content:space-between;align-items:center;font-size:.88rem;color:var(--muted);margin-bottom:6px}
+.summary-row:last-child{margin-bottom:0;font-size:1rem;font-weight:900;color:var(--dark)}
+.summary-total span:last-child{color:var(--red);font-family:'Syne',sans-serif;font-size:1.1rem}
+.btn-checkout{width:100%;background:var(--red);color:#fff;border:none;padding:17px;border-radius:16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 20px rgba(232,33,26,.3);transition:all .2s}
+.btn-checkout:hover{background:var(--red-d);transform:scale(1.02)}
+
+/* CHECKOUT VIEW */
+.checkout-wrap{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.checkout-wrap.on{display:flex}
+.cart-wrap{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.cart-wrap.hide{display:none}
+
+/* FORM */
+.form-group{margin-bottom:14px}
+.form-label{font-size:.78rem;font-weight:800;color:var(--dark);margin-bottom:5px;display:block}
+.form-input,.form-select,.form-textarea{width:100%;border:2px solid #f0e8e0;border-radius:12px;padding:11px 14px;font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--dark);background:#fff;transition:border-color .2s;outline:none;-webkit-appearance:none;appearance:none}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red)}
+.form-textarea{resize:none;height:70px}
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A5A40' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:#fff}
+.btn-back{background:none;border:2px solid #f0e8e0;color:var(--muted);padding:13px;border-radius:16px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;width:100%;margin-bottom:10px;transition:all .2s}
+.btn-back:hover{border-color:var(--red);color:var(--red)}
+.btn-send{width:100%;background:var(--wa);color:#fff;border:none;padding:17px;border-radius:16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 20px rgba(37,211,102,.3);transition:all .2s}
+.btn-send:hover{background:var(--wa-d);transform:scale(1.02)}
+.btn-send svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+
+/* CHECKOUT SUMMARY */
+.checkout-order-summary{background:#FFFDF5;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:.82rem}
+.checkout-order-title{font-weight:900;color:var(--dark);font-size:.85rem;margin-bottom:8px}
+.checkout-order-item{display:flex;justify-content:space-between;color:var(--muted);padding:3px 0}
+.checkout-order-total{display:flex;justify-content:space-between;font-weight:900;color:var(--dark);border-top:1px solid #ede0d0;margin-top:8px;padding-top:8px;font-size:.9rem}
+.checkout-order-total span:last-child{color:var(--red)}
+
+/* WA FLOAT */
+.wa-float{position:fixed;bottom:22px;right:16px;z-index:80;background:var(--wa);color:#fff;font-weight:800;font-size:.86rem;padding:13px 18px;border-radius:100px;display:flex;align-items:center;gap:7px;text-decoration:none;box-shadow:0 6px 24px rgba(37,211,102,.45);animation:pulseWa 2.5s ease-in-out infinite;transition:transform .2s}
+.wa-float:hover{transform:scale(1.05);animation:none}
+.wa-float svg{width:18px;height:18px;fill:#fff;flex-shrink:0}
+@keyframes pulseWa{0%,100%{box-shadow:0 6px 24px rgba(37,211,102,.45)}50%{box-shadow:0 6px 40px rgba(37,211,102,.7),0 0 0 8px rgba(37,211,102,.08)}}
+
+/* FOOTER */
+.ftr{margin:36px 16px 160px;background:var(--dark);border-radius:20px;padding:24px;text-align:center}
+.ftr-logo{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;color:var(--yellow);margin-bottom:5px}
+.ftr-city{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:16px}
+.ftr-wa{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#fff;font-weight:800;font-size:.85rem;padding:11px 20px;border-radius:100px;text-decoration:none}
+.ftr-wa svg{width:16px;height:16px;fill:#fff;flex-shrink:0}
+
+/* RESPONSIVE */
+@media(min-width:500px){
+  .grid{display:grid;grid-template-columns:1fr 1fr}
+  .card{flex-direction:column}
+  .card-img{width:100%;height:110px}
+}
+@media(max-width:380px){
+  .wa-float span{display:none}
+  .wa-float{padding:14px;border-radius:50%}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">🌭</div>
+  <h1>Xis da Dedi</h1>
+  <p class="hdr-sub">📍 Imbé, RS</p>
+  <div class="hdr-badges">
+    <span class="hdr-badge">🥪 Xis</span>
+    <span class="hdr-badge">🌭 Hot Dog</span>
+    <span class="hdr-badge">🍔 Hambúrguer</span>
+  </div>
+</header>
+
+<div class="wave">
+  <svg viewBox="0 0 375 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="40">
+    <path d="M0,20 C80,45 200,0 375,25 L375,40 L0,40 Z" fill="#FFFDF5"/>
+  </svg>
+</div>
+
+<div class="promo">
+  <div class="promo-icon">🔥</div>
+  <div>
+    <div class="promo-title">Monte seu pedido e envie pelo WhatsApp!</div>
+    <div class="promo-desc">Adicione itens no carrinho · Sem taxas · Rápido e fácil</div>
+  </div>
+</div>
+
+<div class="cats-wrap">
+  <div class="cats">
+    <button class="cat on" onclick="filterCat('todos',this)">
+      <span class="cat-em">🍽️</span><span class="cat-lb">Tudo</span>
+    </button>
+    <button class="cat" onclick="filterCat('xis',this)">
+      <span class="cat-em">🥪</span><span class="cat-lb">Xis</span>
+    </button>
+    <button class="cat" onclick="filterCat('hotdog',this)">
+      <span class="cat-em">🌭</span><span class="cat-lb">Hot Dog</span>
+    </button>
+  </div>
+</div>
+
+<div class="sec" data-cat="xis">
+  <div class="sec-hdr">
+    <div class="sec-title"><span>🥪</span>Xis</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card star">
+      <div class="card-body">
+        <div>
+          <div class="card-tags"><span class="tag tag-hot">🔥 Mais Pedido</span></div>
+          <div class="card-name">Xis Tudo</div>
+          <div class="card-desc">O favorito da casa! Completo com todos os ingredientes especiais da Dedi.</div>
+        </div>
+        <div class="card-foot">
+          <div class="card-price"><sup>R$</sup>30,90</div>
+          <button class="btn-add" onclick="addCart('Xis Tudo',30.90,'🥪')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="card-img">🥪</div>
+    </div>
+
+    <div class="card star">
+      <div class="card-body">
+        <div>
+          <div class="card-tags"><span class="tag tag-star">⭐ Recomendado</span></div>
+          <div class="card-name">Xis Frango</div>
+          <div class="card-desc">Frango grelhado, queijo derretido, alface fresca e tomate.</div>
+        </div>
+        <div class="card-foot">
+          <div class="card-price"><sup>R$</sup>29,90</div>
+          <button class="btn-add" onclick="addCart('Xis Frango',29.90,'🍗')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="card-img">🍗</div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <div class="card-tags"></div>
+          <div class="card-name">Xis Calabresa</div>
+          <div class="card-desc">Calabresa fatiada, queijo fundido e temperos da casa.</div>
+        </div>
+        <div class="card-foot">
+          <div class="card-price"><sup>R$</sup>28,90</div>
+          <button class="btn-add" onclick="addCart('Xis Calabresa',28.90,'🌶️')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="card-img">🌶️</div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <div class="card-tags"></div>
+          <div class="card-name">Xis Bacon</div>
+          <div class="card-desc">Bacon crocante, queijo especial e molho artesanal.</div>
+        </div>
+        <div class="card-foot">
+          <div class="card-price"><sup>R$</sup>27,90</div>
+          <button class="btn-add" onclick="addCart('Xis Bacon',27.90,'🥓')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="card-img">🥓</div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <div class="card-tags"></div>
+          <div class="card-name">Xis Salada</div>
+          <div class="card-desc">Alface, tomate, queijo e maionese artesanal. Leve e gostoso!</div>
+        </div>
+        <div class="card-foot">
+          <div class="card-price"><sup>R$</sup>25,90</div>
+          <button class="btn-add" onclick="addCart('Xis Salada',25.90,'🥗')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="card-img">🥗</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="sec" data-cat="hotdog">
+  <div class="sec-hdr">
+    <div class="sec-title"><span>🌭</span>Hot Dog</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card star">
+      <div class="card-body">
+        <div>
+          <div class="card-tags"><span class="tag tag-star">⭐ Recomendado</span></div>
+          <div class="card-name">Hot Dog</div>
+          <div class="card-desc">Salsicha, pão macio, batata palha, milho, ervilha e molhos especiais.</div>
+        </div>
+        <div class="card-foot">
+          <div class="card-price"><sup>R$</sup>25,90</div>
+          <button class="btn-add" onclick="addCart('Hot Dog',25.90,'🌭')">+ Adicionar</button>
+        </div>
+      </div>
+      <div class="card-img">🌭</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="ftr">
+  <div class="ftr-logo">Xis da Dedi</div>
+  <div class="ftr-city">📍 Imbé, RS</div>
+  <a href="https://wa.me/5551995675977?text=Ol%C3%A1%2C+quero+fazer+um+pedido!" target="_blank" rel="noopener noreferrer" class="ftr-wa">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    Falar no WhatsApp
+  </a>
+</div>
+
+<button class="cart-btn" id="cartBtn" onclick="openDrawer()" aria-label="Ver pedido">
+  🛒 Ver pedido
+  <span class="cart-badge" id="cartBadge">0</span>
+  <span class="cart-total-pill" id="cartTotalPill">R$ 0,00</span>
+</button>
+
+<a href="https://wa.me/5551995675977?text=Ol%C3%A1%2C+quero+fazer+um+pedido!" target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <span>WhatsApp</span>
+</a>
+
+<!-- DRAWER OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Carrinho de pedidos">
+    <div class="drawer-handle"></div>
+
+    <!-- CART VIEW -->
+    <div class="cart-wrap" id="cartView">
+      <div class="drawer-hdr">
+        <div class="drawer-title">🛒 Meu Pedido</div>
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="Fechar">✕</button>
+      </div>
+      <div class="drawer-body" id="cartBody"></div>
+      <div class="drawer-foot" id="cartFoot" style="display:none">
+        <div class="cart-summary">
+          <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">R$ 0,00</span></div>
+          <div class="summary-row summary-total"><span>Total</span><span id="summaryTotal">R$ 0,00</span></div>
+        </div>
+        <button class="btn-checkout" onclick="goCheckout()">Continuar para entrega →</button>
+      </div>
+    </div>
+
+    <!-- CHECKOUT VIEW -->
+    <div class="checkout-wrap" id="checkoutView">
+      <div class="drawer-hdr">
+        <div class="drawer-title">📋 Dados do Pedido</div>
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="Fechar">✕</button>
+      </div>
+      <div class="drawer-body">
+        <div class="checkout-order-summary" id="checkoutSummary"></div>
+        <div class="form-group">
+          <label class="form-label" for="fNome">Seu nome *</label>
+          <input class="form-input" id="fNome" type="text" placeholder="Ex: Maria Silva" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fEndereco">Endereço de entrega *</label>
+          <input class="form-input" id="fEndereco" type="text" placeholder="Rua, número, bairro" autocomplete="street-address">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fPagamento">Forma de pagamento *</label>
+          <select class="form-select" id="fPagamento">
+            <option value="">Selecione...</option>
+            <option value="Pix">💸 Pix</option>
+            <option value="Dinheiro">💵 Dinheiro</option>
+            <option value="Cartão de Crédito">💳 Cartão de Crédito</option>
+            <option value="Cartão de Débito">💳 Cartão de Débito</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fObs">Observações (opcional)</label>
+          <textarea class="form-textarea" id="fObs" placeholder="Ex: sem cebola, ponto da carne, troco para R$50..."></textarea>
+        </div>
+      </div>
+      <div class="drawer-foot">
+        <button class="btn-back" onclick="backCart()">← Voltar ao carrinho</button>
+        <button class="btn-send" onclick="sendWhatsApp()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Finalizar pelo WhatsApp
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var WA = '5551995675977';
+  var cart = [];
+
+  function fmt(v) {
+    return 'R$ ' + v.toFixed(2).replace('.', ',');
+  }
+
+  function addCart(name, price, emoji) {
+    var ex = cart.find(function(i) { return i.name === name; });
+    if (ex) {
+      ex.qty++;
+    } else {
+      cart.push({ name: name, price: price, emoji: emoji, qty: 1 });
+    }
+    updateUI();
+  }
+
+  function updateUI() {
+    var total = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+    var qty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+    document.getElementById('cartBadge').textContent = qty;
+    document.getElementById('cartTotalPill').textContent = fmt(total);
+    var cartBtn = document.getElementById('cartBtn');
+    if (cart.length > 0) {
+      cartBtn.classList.add('show');
+    } else {
+      cartBtn.classList.remove('show');
+    }
+    document.getElementById('summarySubtotal').textContent = fmt(total);
+    document.getElementById('summaryTotal').textContent = fmt(total);
+    renderCart();
+  }
+
+  function renderCart() {
+    var body = document.getElementById('cartBody');
+    var foot = document.getElementById('cartFoot');
+    if (!cart.length) {
+      body.innerHTML = '<div class="drawer-empty"><div class="drawer-empty-icon">🛒</div><p>Seu carrinho está vazio.<br>Adicione itens do cardápio!</p></div>';
+      foot.style.display = 'none';
+      return;
+    }
+    foot.style.display = 'block';
+    body.innerHTML = cart.map(function(item, i) {
+      return '<div class="ci">' +
+        '<div class="ci-em">' + item.emoji + '</div>' +
+        '<div class="ci-info">' +
+          '<div class="ci-name">' + item.name + '</div>' +
+          '<div class="ci-price">' + fmt(item.price * item.qty) + '</div>' +
+          '<div class="ci-qty">' +
+            '<button class="qty-btn qty-minus" onclick="changeQty(' + i + ',-1)" aria-label="Diminuir">−</button>' +
+            '<span class="qty-num">' + item.qty + '</span>' +
+            '<button class="qty-btn qty-plus" onclick="changeQty(' + i + ',1)" aria-label="Aumentar">+</button>' +
+          '</div>' +
+        '</div>' +
+        '<button class="ci-del" onclick="removeItem(' + i + ')" aria-label="Remover item">🗑</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  function changeQty(i, d) {
+    cart[i].qty += d;
+    if (cart[i].qty <= 0) cart.splice(i, 1);
+    updateUI();
+  }
+
+  function removeItem(i) {
+    cart.splice(i, 1);
+    updateUI();
+  }
+
+  function openDrawer() {
+    document.getElementById('overlay').classList.add('on');
+    document.body.style.overflow = 'hidden';
+    showCartView();
+  }
+
+  function closeDrawer() {
+    document.getElementById('overlay').classList.remove('on');
+    document.body.style.overflow = '';
+  }
+
+  function showCartView() {
+    document.getElementById('cartView').classList.remove('hide');
+    document.getElementById('checkoutView').classList.remove('on');
+  }
+
+  function goCheckout() {
+    var total = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+    var html = '<div class="checkout-order-title">📋 Resumo do pedido</div>';
+    cart.forEach(function(i) {
+      html += '<div class="checkout-order-item"><span>' + i.qty + 'x ' + i.name + '</span><span>' + fmt(i.price * i.qty) + '</span></div>';
+    });
+    html += '<div class="checkout-order-total"><span>Total</span><span>' + fmt(total) + '</span></div>';
+    document.getElementById('checkoutSummary').innerHTML = html;
+    document.getElementById('cartView').classList.add('hide');
+    document.getElementById('checkoutView').classList.add('on');
+  }
+
+  function backCart() {
+    showCartView();
+  }
+
+  function sendWhatsApp() {
+    var nome = document.getElementById('fNome').value.trim();
+    var end = document.getElementById('fEndereco').value.trim();
+    var pag = document.getElementById('fPagamento').value;
+    var obs = document.getElementById('fObs').value.trim();
+    if (!nome) { alert('Por favor, informe seu nome.'); document.getElementById('fNome').focus(); return; }
+    if (!end) { alert('Por favor, informe seu endereço.'); document.getElementById('fEndereco').focus(); return; }
+    if (!pag) { alert('Por favor, selecione a forma de pagamento.'); document.getElementById('fPagamento').focus(); return; }
+    var total = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+
+    // Mensagem compacta para evitar URI_TOO_LONG
+    var linhas = ['Pedido Xis da Dedi', nome, end];
+    cart.forEach(function(i) { linhas.push(i.qty + 'x ' + i.name + ' ' + fmt(i.price * i.qty)); });
+    linhas.push('Total: ' + fmt(total));
+    linhas.push('Pgto: ' + pag);
+    if (obs) linhas.push('Obs: ' + obs);
+    var msg = linhas.join('\n');
+
+    // Verifica tamanho antes de abrir
+    var encoded = encodeURIComponent(msg);
+    if (encoded.length > 2000) {
+      // Versão mínima se ainda muito longo
+      var msgMin = nome + '\n' + end + '\n';
+      cart.forEach(function(i) { msgMin += i.qty + 'x ' + i.name + '\n'; });
+      msgMin += 'Total: ' + fmt(total) + '\nPgto: ' + pag;
+      encoded = encodeURIComponent(msgMin);
+    }
+
+    window.open('https://wa.me/' + WA + '?text=' + encoded, '_blank');
+  }
+
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.cat').forEach(function(b) { b.classList.remove('on'); });
+    btn.classList.add('on');
+    document.querySelectorAll('.sec[data-cat]').forEach(function(s) {
+      if (cat !== 'todos' && s.dataset.cat !== cat) {
+        s.classList.add('hide');
+      } else {
+        s.classList.remove('hide');
+      }
+    });
+  }
+
+  // Overlay click to close
+  document.getElementById('overlay').addEventListener('click', function(e) {
+    if (e.target === document.getElementById('overlay')) closeDrawer();
+  });
+
+  // Prevent drawer clicks from closing
+  document.getElementById('drawer').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // Expose functions globally
+  window.addCart = addCart;
+  window.changeQty = changeQty;
+  window.removeItem = removeItem;
+  window.openDrawer = openDrawer;
+  window.closeDrawer = closeDrawer;
+  window.goCheckout = goCheckout;
+  window.backCart = backCart;
+  window.sendWhatsApp = sendWhatsApp;
+  window.filterCat = filterCat;
+
+  // Initial render
+  updateUI();
+})();
+</script>
+</body>
+</html>
